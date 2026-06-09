@@ -1,0 +1,47 @@
+basePath: /
+definitions:
+  dto.CreateArticleRequest:
+    properties:
+      content:
+        type: string
+      title:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Blog loyihasi API
+  title: Blog API
+  version: "1.0"
+paths:
+  /articles/create:
+    post:
+      consumes:
+      - application/json
+      description: Title va content bilan yangi article yaratadi
+      parameters:
+      - description: Article ma'lumotlari
+        in: body
+        name: article
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateArticleRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: muvafaqiyatli qo'shildi
+          schema:
+            type: string
+        "400":
+          description: Noto'g'ri so'rov
+          schema:
+            type: string
+        "500":
+          description: Server xatosi
+          schema:
+            type: string
+      summary: Yangi article yaratish
+      tags:
+      - articles
+swagger: "2.0"

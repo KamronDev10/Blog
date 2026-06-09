@@ -1,0 +1,91 @@
+qachon migration yoziladi  ---------------------------------| 
+
+✅ Yangi jadval yaratish
+✅ Jadvalga column qo'shish
+✅ Column o'zgartirish
+✅ Column o'chirish
+✅ Xatoni tuzatish
+
+
+
+
+# Yuklab olish ---------------------------------------------------------------------------------------------------------| 
+curl -L https://github.com/golang-migrate/migrate/releases/download/v4.16.2/migrate.linux-amd64.tar.gz | tar xvz migrate
+
+# PATH ga qo'shish --------------------|
+sudo mv migrate /usr/local/bin/migrate
+
+
+# Tekshirish --------------------|
+migrate -version
+
+
+# Yangi fayl yaratish -------------------- | 
+migrate create -ext sql -dir resources/migrations -seq fayl_nomi
+
+# Hammani ishga tushirish -------------------------| 
+make migrate-up
+
+# Bitta orqaga ---------------- | 
+make migrate-down
+
+# Qaysi versiondasiz --------------------- | 
+migrate -path resources/migrations -database "$(DB_URL)" version
+
+# Dirty holatni tuzatish ------------------ | 
+migrate -path resources/migrations -database "$(DB_URL)" force 2
+
+
+
+-- Jadval yaratish → up
+CREATE TABLE users (
+    id         SERIAL PRIMARY KEY,
+    name       VARCHAR(100) NOT NULL,
+    email      VARCHAR(100) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+-- Jadval yaratish → down
+DROP TABLE IF EXISTS users;
+
+-- Column qo'shish → up
+ALTER TABLE users ADD COLUMN phone VARCHAR(20);
+-- Column qo'shish → down
+ALTER TABLE users DROP COLUMN phone;
+
+-- Column o'zgartirish → up
+ALTER TABLE users ALTER COLUMN name TYPE VARCHAR(200);
+-- Column o'zgartirish → down
+ALTER TABLE users ALTER COLUMN name TYPE VARCHAR(100);
+
+-- Column o'chirish → up
+ALTER TABLE users DROP COLUMN phone;
+-- Column o'chirish → down
+ALTER TABLE users ADD COLUMN phone VARCHAR(20);
+
+-- Column nomi o'zgartirish → up
+ALTER TABLE users RENAME COLUMN username TO name;
+-- Column nomi o'zgartirish → down
+ALTER TABLE users RENAME COLUMN name TO username;
+
+
+✅ Har bir o'zgarish = yangi migration fayl
+✅ up da nima qilsang — down da aksini yoz
+✅ Fayl nomini tushunarli yoz
+   → add_phone_to_users
+   → create_articles_table
+   → fix_email_unique
+
+❌ Eski migration faylni O'ZGARTIRMA
+❌ Eski migration faylni O'CHIRMA
+❌ Serverda migrate down QILMA
+
+
+LOCAL:
+Xato → migrate down → tuzat → migrate up ✅
+
+SERVER:
+Xato → yangi migration yoz → migrate up ✅
+     → HECH QACHON migrate down QILMA!
+
+
+     
