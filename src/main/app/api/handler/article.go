@@ -44,6 +44,14 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("muvafaqiyatli qo'shildi "))
 }
 
+// GetAll godoc
+// @Summary      Barcha maqolalarni olish
+// @Description  Ma'lumotlar bazasidan barcha maqolalar ro'yxatini qaytaradi
+// @Tags         articles
+// @Produce      json
+// @Success      200 {array} models.Article "Maqolalar ro'yxati muvaffaqiyatli qaytarildi"
+// @Failure      500 {object} map[string]string "Ichki server xatosi"
+// @Router       /articles [get]
 func (h *Handler) GetAll(w http.ResponseWriter, r *http.Request) {
 
 	articles, err := h.Service.GetAll()

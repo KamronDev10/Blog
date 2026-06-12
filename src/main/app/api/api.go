@@ -6,7 +6,7 @@ import (
 )
 
 func Api(router *http.ServeMux, handler *handler.Handler) {
-	router.HandleFunc("/Create", handler.Create)
-	router.HandleFunc("/articles", handler.GetAll)
+	router.HandleFunc("POST /articles/create", handler.Create)
+	router.HandleFunc("GET /articles", handler.GetAll)
 
 }

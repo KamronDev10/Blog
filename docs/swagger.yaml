@@ -7,6 +7,26 @@ definitions:
       title:
         type: string
     type: object
+  models.Article:
+    properties:
+      active:
+        type: boolean
+      content:
+        type: string
+      createdAt:
+        type: string
+      id:
+        format: int64
+        type: integer
+      title:
+        type: string
+      userID:
+        format: int64
+        type: integer
+      viewCount:
+        format: int64
+        type: integer
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -14,6 +34,27 @@ info:
   title: Blog API
   version: "1.0"
 paths:
+  /articles:
+    get:
+      description: Ma'lumotlar bazasidan barcha maqolalar ro'yxatini qaytaradi
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Maqolalar ro'yxati muvaffaqiyatli qaytarildi
+          schema:
+            items:
+              $ref: '#/definitions/models.Article'
+            type: array
+        "500":
+          description: Ichki server xatosi
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Barcha maqolalarni olish
+      tags:
+      - articles
   /articles/create:
     post:
       consumes:
