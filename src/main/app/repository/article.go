@@ -9,7 +9,7 @@ type ArticleRepoI interface {
 	Create(article models.Article) error
 	Update(article models.Article) error
 	Delete(id int) error
-	Get(id int) (*models.Article, error)
+	Get(id int) (*models.Article, error) // shu qoldi
 	GetAll() ([]*models.Article, error)
 }
 
@@ -104,11 +104,3 @@ func (ar *ArticleRepo) Delete(id int) error {
 func (ar *ArticleRepo) Get(id int) (*models.Article, error) {
 	return nil, nil
 }
-
-//   id         SERIAL PRIMARY KEY,
-//     title      VARCHAR(255) NOT NULL,
-//     content    TEXT NOT NULL,
-//     view_count INT DEFAULT 0,
-//     active     BOOLEAN DEFAULT true,
-//     created_at TIMESTAMP DEFAULT NOW(),
-//     user_id    INT NOT NULL,
