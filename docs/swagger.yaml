@@ -7,6 +7,15 @@ definitions:
       title:
         type: string
     type: object
+  dto.UpdateArticleRequest:
+    properties:
+      active:
+        type: boolean
+      content:
+        type: string
+      title:
+        type: string
+    type: object
   models.Article:
     properties:
       active:
@@ -83,6 +92,65 @@ paths:
           schema:
             type: string
       summary: Yangi article yaratish
+      tags:
+      - articles
+  /articles/delete:
+    delete:
+      parameters:
+      - description: Article ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: o'chirildi
+          schema:
+            type: string
+        "400":
+          description: id noto'g'ri
+          schema:
+            type: string
+        "500":
+          description: server xatosi
+          schema:
+            type: string
+      summary: Article o'chirish
+      tags:
+      - articles
+  /articles/update:
+    put:
+      consumes:
+      - application/json
+      description: Article title, content va active holatini yangilaydi
+      parameters:
+      - description: Article ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      - description: Article ma'lumotlari
+        in: body
+        name: article
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateArticleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: yangilandi
+          schema:
+            type: string
+        "400":
+          description: id noto'g'ri
+          schema:
+            type: string
+        "500":
+          description: server xatosi
+          schema:
+            type: string
+      summary: Article yangilash
       tags:
       - articles
 swagger: "2.0"

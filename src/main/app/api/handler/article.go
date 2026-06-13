@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 // Create godoc
@@ -61,4 +62,67 @@ func (h *Handler) GetAll(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	encoder := json.NewEncoder(w)
 	encoder.Encode(articles)
+}
+
+// @Summary     Article yangilash
+// @Description Article title, content va active holatini yangilaydi
+// @Tags        articles
+// @Accept      json
+// @Produce     json
+// @Param       id query int true "Article ID"
+// @Param       article body dto.UpdateArticleRequest true "Article ma'lumotlari"
+// @Success     200 {string} string "yangilandi"
+// @Failure     400 {string} string "id noto'g'ri"
+// @Failure     500 {string} string "server xatosi"
+// @Router      /articles/update [put]
+func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
+
+	idStr := r.URL.Query().Get("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Error(w, "id noto'g'ri", http.StatusBadRequest)
+		return
+	}
+	var newarticle dto.UpdateArticleRequest
+
+	decoder := json.NewDecoder(r.Body)
+	err = decoder.Decode(&newarticle)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = h.Service.Update(models.Article{
+		Id:      int64(id),
+		Title:   newarticle.Title,
+		Content: newarticle.Content,
+		Active:  newarticle.Active,
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("yangilandi"))
+}
+
+// @Summary     Article o'chirish
+// @Tags        articles
+// @Param       id query int true "Article ID"
+// @Success     200 {string} string "o'chirildi"
+// @Failure     400 {string} string "id noto'g'ri"
+// @Failure     500 {string} string "server xatosi"
+// @Router      /articles/delete [delete]
+func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
+	idStr := r.URL.Query().Get("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Error(w, "id noto'g'ri", http.StatusBadRequest)
+		return
+	}
+	err = h.Service.Delete(id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("o'chirildi"))
 }

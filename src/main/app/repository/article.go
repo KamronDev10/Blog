@@ -72,10 +72,32 @@ func (ar *ArticleRepo) GetAll() ([]*models.Article, error) {
 // ---------------------------------------------------------------------------------------
 
 func (ar *ArticleRepo) Update(article models.Article) error {
+
+	query := `UPDATE articles SET title=$1, content=$2, active=$3 WHERE id = $4`
+
+	_, err := ar.db.Exec(
+		query,
+		article.Title,
+		article.Content,
+		article.Active,
+		article.Id,
+	)
+
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
 func (ar *ArticleRepo) Delete(id int) error {
+
+	query := `DELETE FROM articles WHERE id = $1`
+
+	_, err := ar.db.Exec(query, id)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
