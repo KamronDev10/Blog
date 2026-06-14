@@ -130,6 +130,47 @@ const docTemplate = `{
                 }
             }
         },
+        "/articles/get": {
+            "get": {
+                "description": "Malumotlar bazasidan bitta maqolani qaytaradi",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "articles"
+                ],
+                "summary": "bitta Article o'qish",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Article ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "maqola  muvaffaqiyatli qaytarildi",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Article"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ichki server xatosi",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/articles/update": {
             "put": {
                 "description": "Article title, content va active holatini yangilaydi",

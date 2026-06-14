@@ -118,6 +118,33 @@ paths:
       summary: Article o'chirish
       tags:
       - articles
+  /articles/get:
+    get:
+      description: Malumotlar bazasidan bitta maqolani qaytaradi
+      parameters:
+      - description: Article ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: maqola  muvaffaqiyatli qaytarildi
+          schema:
+            items:
+              $ref: '#/definitions/models.Article'
+            type: array
+        "500":
+          description: Ichki server xatosi
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: bitta Article o'qish
+      tags:
+      - articles
   /articles/update:
     put:
       consumes:

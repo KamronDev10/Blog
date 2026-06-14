@@ -10,6 +10,7 @@ type ArticleServiceI interface {
 	GetAll() ([]*models.Article, error)
 	Update(article models.Article) error
 	Delete(id int) error
+	Get(id int) (*models.Article, error)
 }
 
 type articleService struct {
@@ -34,4 +35,8 @@ func (as *articleService) Update(article models.Article) error {
 
 func (as *articleService) Delete(id int) error {
 	return as.articleRepo.Delete(id)
+}
+
+func (as *articleService) Get(id int) (*models.Article, error) {
+	return as.articleRepo.Get(id)
 }

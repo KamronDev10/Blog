@@ -126,3 +126,41 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("o'chirildi"))
 }
+
+// @Summary  		bitta Article o'qish
+// @Param           id query int true "Article ID"
+// @Description 	Malumotlar bazasidan bitta maqolani qaytaradi
+// @Tags 			articles
+// @Produce 		json
+// @Success      200 {array} models.Article "maqola  muvaffaqiyatli qaytarildi"
+// @Failure      500 {object} map[string]string "Ichki server xatosi"
+// @Router 		/articles/get [get]
+func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
+
+	idStr := r.URL.Query().Get("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Error(w, "id noto'g'ri ", http.StatusBadRequest)
+		return
+	}
+
+	article, err := h.Service.Get(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	response := dto.ArticleResponse{
+		Id:        article.Id,
+		Title:     article.Title,
+		Content:   article.Content,
+		ViewCount: article.ViewCount,
+		Active:    article.Active,
+		CreatedAt: article.CreatedAt,
+		UserID:    article.UserID,
+	}
+
+	encoder := json.NewEncoder(w)
+	encoder.Encode(response)
+
+}

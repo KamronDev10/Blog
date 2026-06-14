@@ -102,5 +102,21 @@ func (ar *ArticleRepo) Delete(id int) error {
 }
 
 func (ar *ArticleRepo) Get(id int) (*models.Article, error) {
-	return nil, nil
+
+	query := `SELECT * FROM articles WHERE id = $1  `
+	var article models.Article
+	err := ar.db.QueryRow(query, id).Scan(
+		&article.Id,
+		&article.Title,
+		&article.Content,
+		&article.ViewCount,
+		&article.Active,
+		&article.CreatedAt,
+		&article.UserID,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &article, nil
 }

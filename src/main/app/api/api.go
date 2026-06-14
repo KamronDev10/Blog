@@ -10,5 +10,6 @@ func Api(router *http.ServeMux, handler *handler.Handler) {
 	router.HandleFunc("GET /articles", handler.GetAll)
 	router.HandleFunc("PUT /articles/update", handler.Update)
 	router.HandleFunc("DELETE /articles/delete", handler.Delete)
+	router.HandleFunc("GET /articles/get", handler.Get)
 
 }
