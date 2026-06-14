@@ -105,6 +105,7 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("yangilandi"))
 }
 
+// artilce larni o'chirish uchun handler func
 // @Summary     Article o'chirish
 // @Tags        articles
 // @Param       id query int true "Article ID"
