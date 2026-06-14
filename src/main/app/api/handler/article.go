@@ -127,6 +127,8 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("o'chirildi"))
 }
 
+//	get url uchun handler func
+//
 // @Summary  		bitta Article o'qish
 // @Param           id query int true "Article ID"
 // @Description 	Malumotlar bazasidan bitta maqolani qaytaradi
