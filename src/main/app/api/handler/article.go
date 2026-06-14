@@ -64,6 +64,7 @@ func (h *Handler) GetAll(w http.ResponseWriter, r *http.Request) {
 	encoder.Encode(articles)
 }
 
+// yangi article qo'shish uchun handler func
 // @Summary     Article yangilash
 // @Description Article title, content va active holatini yangilaydi
 // @Tags        articles
