@@ -45,7 +45,7 @@ func GetToken(id int64, username string, email string, role string) (string, err
 }
 
 // tokenni haqiqiyligini tekshirish uchun
-func VerifyToken(tokenString string) (*CustomClaims, error) {
+func AuthToken(tokenString string) (*CustomClaims, error) {
 
 	token, err := jwt.ParseWithClaims(
 		tokenString,
