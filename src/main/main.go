@@ -29,6 +29,7 @@ func main() {
 	router := http.NewServeMux()
 	log.Println("server is running .... ")
 
+	// -------------- Article Layer -----------------------
 	{
 		articleRepo := repository.NewArticleRepo(db)
 		articleService := service.NewArticleService(articleRepo)
@@ -39,6 +40,18 @@ func main() {
 
 		api.Api(router, &handler)
 	}
+	// ----------------- USER layer ------------------------------------------------
+	{
+		userRepo := repository.NewUserRepo(db)
+		userService := service.NewUserService(userRepo)
+
+		userHandler := handler.Handler{
+			ServiceUser: userService,
+		}
+		api.RegisterUserRoutes(router, &userHandler)
+	}
+
+	// -- Server --------- layer
 	router.HandleFunc("/swagger/", httpSwagger.WrapHandler)
 	http.ListenAndServe(":8080", router)
 

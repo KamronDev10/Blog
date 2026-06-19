@@ -13,3 +13,7 @@ func Api(router *http.ServeMux, handler *handler.Handler) {
 	router.HandleFunc("GET /articles/get", handler.Get)
 
 }
+
+func RegisterUserRoutes(router *http.ServeMux, h *handler.Handler) {
+	router.HandleFunc("POST /auth/sign-up", h.CreateUser)
+}
