@@ -16,4 +16,6 @@ func Api(router *http.ServeMux, handler *handler.Handler) {
 
 func RegisterUserRoutes(router *http.ServeMux, h *handler.Handler) {
 	router.HandleFunc("POST /auth/sign-up", h.CreateUser)
+
+	router.HandleFunc("POST /auth/sign-in", h.Login)
 }

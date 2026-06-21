@@ -49,6 +49,15 @@ func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// @Summary Foydalanuvchi kirishi (Sign In)
+// @Description Email va parol bilan kirish, token qaytaradi
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param user body dto.SignInRequest true "Email va parol"
+// @Success 200 {object} map[string]string "token"
+// @Failure 401 {string} string "Unauthorized"
+// @Router /auth/sign-in [post]
 func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 
 	var req dto.SignInRequest
