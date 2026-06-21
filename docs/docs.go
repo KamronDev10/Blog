@@ -49,6 +49,11 @@ const docTemplate = `{
         },
         "/articles/create": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Title va content bilan yangi article yaratadi",
                 "consumes": [
                     "application/json"
@@ -95,6 +100,11 @@ const docTemplate = `{
         },
         "/articles/delete": {
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "tags": [
                     "articles"
                 ],
@@ -173,6 +183,11 @@ const docTemplate = `{
         },
         "/articles/update": {
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Article title, content va active holatini yangilaydi",
                 "consumes": [
                     "application/json"
@@ -397,17 +412,25 @@ const docTemplate = `{
                 }
             }
         }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "description": "Blog loyihasi API",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.0",
-	Host:             "localhost:8080",
-	BasePath:         "/",
+	Version:          "",
+	Host:             "",
+	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Blog API",
-	Description:      "Blog loyihasi API",
+	Title:            "",
+	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

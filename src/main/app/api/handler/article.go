@@ -11,6 +11,7 @@ import (
 )
 
 // Create godoc
+// @Security BearerAuth
 // @Summary     Yangi article yaratish
 // @Description Title va content bilan yangi article yaratadi
 // @Tags        articles
@@ -65,6 +66,7 @@ func (h *Handler) GetAll(w http.ResponseWriter, r *http.Request) {
 }
 
 // yangi article qo'shish uchun handler func
+// @Security BearerAuth
 // @Summary     Article yangilash
 // @Description Article title, content va active holatini yangilaydi
 // @Tags        articles
@@ -107,6 +109,7 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 }
 
 // artilce larni o'chirish uchun handler func
+// @Security BearerAuth
 // @Summary     Article o'chirish
 // @Tags        articles
 // @Param       id query int true "Article ID"

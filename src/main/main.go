@@ -13,6 +13,9 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 // @title           Blog API
 // @version         1.0
 // @description     Blog loyihasi API
