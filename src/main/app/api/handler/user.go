@@ -48,3 +48,12 @@ func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		"message": "Foydalanuvchi muvaffaqiyatli yaratildi",
 	})
 }
+
+func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
+
+	var req dto.SignInRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "Noto'g'ri malumot ", http.StatusBadRequest)
+	}
+
+}

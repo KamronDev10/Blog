@@ -4,13 +4,15 @@ import (
 	"blog_app/src/main/app/models"
 	"blog_app/src/main/app/repository"
 	"blog_app/src/main/common/token"
+	"errors"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
 type UserServiceI interface {
 	CreateUser(user *models.User) (string, error)
-	// GetByEmail(email string) (*models.User, error)
+	GetByEmail(email string) (*models.User, error)
+	LogIn(email string, password string) (string, error)
 }
 
 type userService struct {
@@ -36,4 +38,32 @@ func (us *userService) CreateUser(user *models.User) (string, error) {
 		return "", err
 	}
 	return tokenString, nil
+}
+
+func (us *userService) GetByEmail(email string) (*models.User, error) {
+
+	user, err := us.userRepo.GetByEmail(email)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
+
+func (us *userService) LogIn(email string, password string) (string, error) {
+	user, err := us.userRepo.GetByEmail(email)
+	if err != nil {
+		return "", errors.New("user topilmadi ")
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password_hash), []byte(password))
+	if err != nil {
+		return "", errors.New("parol noto'g'ri")
+	}
+	tokenstring, err := token.GetToken(user.Id, user.Username, user.Email, "user")
+	if err != nil {
+		return "", err
+
+	}
+	return tokenstring, nil
 }
