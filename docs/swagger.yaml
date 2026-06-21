@@ -7,6 +7,13 @@ definitions:
       title:
         type: string
     type: object
+  dto.SignInRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
   dto.SignUpRequest:
     properties:
       email:
@@ -189,6 +196,34 @@ paths:
       summary: Article yangilash
       tags:
       - articles
+  /auth/sign-in:
+    post:
+      consumes:
+      - application/json
+      description: Email va parol bilan kirish, token qaytaradi
+      parameters:
+      - description: Email va parol
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SignInRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      summary: Foydalanuvchi kirishi (Sign In)
+      tags:
+      - Auth
   /auth/sign-up:
     post:
       consumes:
