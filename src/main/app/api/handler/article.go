@@ -65,6 +65,7 @@ func (h *Handler) GetAll(w http.ResponseWriter, r *http.Request) {
 	encoder.Encode(articles)
 }
 
+// qoshib
 // yangi article qo'shish uchun handler func
 // @Security BearerAuth
 // @Summary     Article yangilash
