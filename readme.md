@@ -38,3 +38,5 @@ Swagger: `http://localhost:8080/swagger/index.html`
 > 🔒 — Requires token
 
 yana qoshish mumkin boladi 
+
+api qosh 
