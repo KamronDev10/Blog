@@ -6,6 +6,13 @@ definitions:
       title:
         type: string
     type: object
+  dto.CreateTagRequest:
+    properties:
+      name:
+        type: string
+      slug:
+        type: string
+    type: object
   dto.SignInRequest:
     properties:
       email:
@@ -290,7 +297,7 @@ paths:
         name: tag
         required: true
         schema:
-          $ref: '#/definitions/models.Tag'
+          $ref: '#/definitions/dto.CreateTagRequest'
       produces:
       - application/json
       responses:

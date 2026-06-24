@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"blog_app/src/main/app/dto"
 	"blog_app/src/main/app/models"
 	"encoding/json"
 	"net/http"
@@ -12,28 +13,31 @@ import (
 // @Tags Tags
 // @Accept json
 // @Produce json
-// @Param tag body models.Tag true "Tag ma'lumotlari"
+// @Param tag body dto.CreateTagRequest true "Tag ma'lumotlari"
 // @Success 201 {object} models.Tag
 // @Failure 400 {string} string "Bad Request"
 // @Security BearerAuth
 // @Router /tags/create [post]
 func (h *Handler) CreateTag(w http.ResponseWriter, r *http.Request) {
 
-	var tag models.Tag
+	var newtag dto.CreateTagRequest
 
-	if err := json.NewDecoder(r.Body).Decode(&tag); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&newtag); err != nil {
 		http.Error(w, "Noto'g'ri ma'lumot", http.StatusBadRequest)
 		return
 	}
 
-	if err := h.ServiceTag.CreateTag(&tag); err != nil {
+	if err := h.ServiceTag.CreateTag(&models.Tag{
+		Name: newtag.Name,
+		Slug: newtag.Slug,
+	}); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(tag)
+	json.NewEncoder(w).Encode(newtag)
 }
 
 // @Summary Barcha taglar
