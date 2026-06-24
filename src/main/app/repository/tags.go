@@ -22,7 +22,7 @@ func NewTagRepo(db *sql.DB) TagRepoI {
 
 func (tr *TagRepo) CreateTag(tag *models.Tag) error {
 
-	query := `INSERT INTO tags (name , slug) INTO ($1 , $2)`
+	query := `INSERT INTO tags (name , slug) VALUES ($1 , $2)`
 	_, err := tr.db.Exec(query, tag.Name, tag.Slug)
 	if err != nil {
 		return err
