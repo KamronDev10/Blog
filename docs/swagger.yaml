@@ -51,6 +51,15 @@ definitions:
         format: int64
         type: integer
     type: object
+  models.Tag:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      slug:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
@@ -257,6 +266,85 @@ paths:
       summary: Foydalanuvchi yaratish (Sign Up)
       tags:
       - Auth
+  /tags:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Tag'
+            type: array
+      summary: Barcha taglar
+      tags:
+      - Tags
+  /tags/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Tag ma'lumotlari
+        in: body
+        name: tag
+        required: true
+        schema:
+          $ref: '#/definitions/models.Tag'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Tag'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      - BearerAuth: []
+      summary: Tag yaratish
+      tags:
+      - Tags
+  /tags/delete:
+    delete:
+      parameters:
+      - description: Tag ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: o'chirildi
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      - BearerAuth: []
+      summary: Tag o'chirish
+      tags:
+      - Tags
+  /tags/get:
+    get:
+      parameters:
+      - description: Tag ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Tag'
+      summary: Bitta tag
+      tags:
+      - Tags
 securityDefinitions:
   BearerAuth:
     description: Blog loyihasi API

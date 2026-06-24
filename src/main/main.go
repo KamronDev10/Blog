@@ -54,6 +54,17 @@ func main() {
 		api.RegisterUserRoutes(router, &userHandler)
 	}
 
+	// ----------------------- tags layer --------------------------------
+	{
+		tagRepo := repository.NewTagRepo(db)
+		tagService := service.NewTagService(tagRepo)
+
+		tagHandler := handler.Handler{
+			ServiceTag: tagService,
+		}
+		api.RegistrTagRoutes(router, &tagHandler)
+	}
+
 	// -- Server --------- layer
 	router.HandleFunc("/swagger/", httpSwagger.WrapHandler)
 	http.ListenAndServe(":8080", router)
