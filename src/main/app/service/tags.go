@@ -8,8 +8,8 @@ import (
 type TagServiceI interface {
 	CreateTag(tag *models.Tag) error
 	GetAll() ([]*models.Tag, error)
-	GetByID(id int) (*models.Tag, error)
-	Delete(id int) error
+	GetByID(id int64) (*models.Tag, error)
+	Delete(id int64) error
 }
 
 type TagService struct {
@@ -34,7 +34,7 @@ func (ts *TagService) GetAll() ([]*models.Tag, error) {
 	return tags, nil
 }
 
-func (ts *TagService) GetByID(id int) (*models.Tag, error) {
+func (ts *TagService) GetByID(id int64) (*models.Tag, error) {
 	tag, err := ts.tagrepo.GetByID(id)
 	if err != nil {
 		return nil, err
@@ -44,6 +44,6 @@ func (ts *TagService) GetByID(id int) (*models.Tag, error) {
 
 }
 
-func (ts *TagService) Delete(id int) error {
+func (ts *TagService) Delete(id int64) error {
 	return ts.tagrepo.Delete(id)
 }

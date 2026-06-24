@@ -30,3 +30,18 @@ func RegisterUserRoutes(router *http.ServeMux, h *handler.Handler) {
 
 	router.HandleFunc("POST /auth/sign-in", h.Login)
 }
+
+func RegistrTagRoutes(router *http.ServeMux, handler *handler.Handler) {
+	// Middleware yo'q ------------------------
+	router.HandleFunc("GET /tags", handler.GetAllTags)
+	router.HandleFunc("GET /tags/get", handler.GetTagByID)
+
+	// Middleware bor --------------------------
+
+	router.Handle("POST /tags/create",
+		middleware.AuthMiddleware(http.HandlerFunc(handler.CreateTag)))
+
+	router.Handle("DELETE /tags/delete",
+		middleware.AuthMiddleware(http.HandlerFunc(handler.DeleteTag)))
+
+}
