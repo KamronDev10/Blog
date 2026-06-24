@@ -8,8 +8,8 @@ import (
 type TagRepoI interface {
 	CreateTag(tag *models.Tag) error
 	GetAll() ([]*models.Tag, error)
-	GetByID(id int) (*models.Tag, error)
-	Delete(id int) error
+	GetByID(id int64) (*models.Tag, error)
+	Delete(id int64) error
 }
 
 type TagRepo struct {
@@ -60,7 +60,7 @@ func (tr *TagRepo) GetAll() ([]*models.Tag, error) {
 	return tags, nil
 }
 
-func (tr *TagRepo) GetByID(id int) (*models.Tag, error) {
+func (tr *TagRepo) GetByID(id int64) (*models.Tag, error) {
 
 	query := `SELECT id , name , slug FROM tags WHERE id = $1`
 	tag := &models.Tag{}
@@ -75,7 +75,7 @@ func (tr *TagRepo) GetByID(id int) (*models.Tag, error) {
 	return tag, nil
 }
 
-func (tr *TagRepo) Delete(id int) error {
+func (tr *TagRepo) Delete(id int64) error {
 
 	query := `DELETE FROM tags WHERE id = $1`
 	_, err := tr.db.Exec(query, id)
