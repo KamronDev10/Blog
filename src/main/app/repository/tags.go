@@ -43,7 +43,7 @@ func (tr *TagRepo) GetAll() ([]*models.Tag, error) {
 
 	var tags []*models.Tag
 	for rows.Next() {
-		tag := models.Tag{}
+		tag := &models.Tag{}
 
 		err := rows.Scan(
 			&tag.Id,
@@ -53,22 +53,35 @@ func (tr *TagRepo) GetAll() ([]*models.Tag, error) {
 		if err != nil {
 			return nil, err
 		}
-		tags = append(tags, &tag)
+		tags = append(tags, tag)
 
 	}
 
 	return tags, nil
 }
 
-func (tg *TagRepo) GetByID(id int) (*models.Tag, error) {
-	return nil, nil
+func (tr *TagRepo) GetByID(id int) (*models.Tag, error) {
+
+	query := `SELECT id , name , slug FROM tags WHERE id = $1`
+	tag := &models.Tag{}
+	err := tr.db.QueryRow(query, id).Scan(
+		&tag.Id,
+		&tag.Name,
+		&tag.Slug,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return tag, nil
 }
 
-func (tg *TagRepo) Delete(id int) error {
+func (tr *TagRepo) Delete(id int) error {
+
+	query := `DELETE FROM tags WHERE id = $1`
+	_, err := tr.db.Exec(query, id)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
-
-// 1. CreateTag
-// 2. GetAll
-// 3. GetByID
-// 4. Delete
