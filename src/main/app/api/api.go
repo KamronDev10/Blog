@@ -56,6 +56,6 @@ func RegistrCommentRoutes(router *http.ServeMux, handler *handler.Handler) {
 	router.Handle("POST /comments/create",
 		middleware.AuthMiddleware(http.HandlerFunc(handler.CreateComment)))
 
-	router.Handle("DELETE /comment/delete",
+	router.Handle("DELETE /comments/delete",
 		middleware.AuthMiddleware(http.HandlerFunc(handler.DeleteComment)))
 }

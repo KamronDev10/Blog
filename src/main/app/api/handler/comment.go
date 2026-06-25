@@ -13,7 +13,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param comment body dto.CreateCommentRequest true "Comment ma'lumotlari"
-// @Success 201 {object} models.Comment
+// @Success 201 {object} models.Comments
 // @Failure 400 {string} string "Bad Request"
 // @Security BearerAuth
 // @Router /comments/create [post]
@@ -46,7 +46,7 @@ func (h *Handler) CreateComment(w http.ResponseWriter, r *http.Request) {
 // @Tags Comments
 // @Produce json
 // @Param article_id query int true "Article ID"
-// @Success 200 {array} models.Comment
+// @Success 200 {array} models.Comments
 // @Router /comments [get]
 func (h *Handler) GetCommentsByArticleID(w http.ResponseWriter, r *http.Request) {
 

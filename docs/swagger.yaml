@@ -6,6 +6,13 @@ definitions:
       title:
         type: string
     type: object
+  dto.CreateCommentRequest:
+    properties:
+      article_id:
+        type: integer
+      content:
+        type: string
+    type: object
   dto.CreateTagRequest:
     properties:
       name:
@@ -56,6 +63,19 @@ definitions:
         type: integer
       viewCount:
         format: int64
+        type: integer
+    type: object
+  models.Comments:
+    properties:
+      article_id:
+        type: integer
+      content:
+        type: string
+      create_at:
+        type: string
+      id:
+        type: integer
+      user_id:
         type: integer
     type: object
   models.Tag:
@@ -273,6 +293,71 @@ paths:
       summary: Foydalanuvchi yaratish (Sign Up)
       tags:
       - Auth
+  /comments:
+    get:
+      parameters:
+      - description: Article ID
+        in: query
+        name: article_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Comments'
+            type: array
+      summary: Maqola commentlari
+      tags:
+      - Comments
+  /comments/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Comment ma'lumotlari
+        in: body
+        name: comment
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateCommentRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Comments'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Comment yaratish
+      tags:
+      - Comments
+  /comments/delete:
+    delete:
+      parameters:
+      - description: Comment ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: o'chirildi
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Comment o'chirish
+      tags:
+      - Comments
   /tags:
     get:
       produces:

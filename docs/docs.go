@@ -331,6 +331,111 @@ const docTemplate = `{
                 }
             }
         },
+        "/comments": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Maqola commentlari",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Article ID",
+                        "name": "article_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Comments"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/comments/create": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Comment yaratish",
+                "parameters": [
+                    {
+                        "description": "Comment ma'lumotlari",
+                        "name": "comment",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateCommentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Comments"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/comments/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Comment o'chirish",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Comment ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "o'chirildi",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/tags": {
             "get": {
                 "produces": [
@@ -474,6 +579,17 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.CreateCommentRequest": {
+            "type": "object",
+            "properties": {
+                "article_id": {
+                    "type": "integer"
+                },
+                "content": {
+                    "type": "string"
+                }
+            }
+        },
         "dto.CreateTagRequest": {
             "type": "object",
             "properties": {
@@ -550,6 +666,26 @@ const docTemplate = `{
                 "viewCount": {
                     "type": "integer",
                     "format": "int64"
+                }
+            }
+        },
+        "models.Comments": {
+            "type": "object",
+            "properties": {
+                "article_id": {
+                    "type": "integer"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "create_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
                 }
             }
         },
