@@ -65,6 +65,17 @@ func main() {
 		api.RegistrTagRoutes(router, &tagHandler)
 	}
 
+	// -------------------- comments layer ---------------------
+	{
+		commentRepo := repository.NewCommentRepo(db)
+		commentService := service.NewCommentService(commentRepo)
+
+		commentHandler := handler.Handler{
+			ServiceComment: commentService,
+		}
+		api.RegistrCommentRoutes(router, &commentHandler)
+	}
+
 	// -- Server --------- layer
 	router.HandleFunc("/swagger/", httpSwagger.WrapHandler)
 	http.ListenAndServe(":8080", router)

@@ -45,3 +45,17 @@ func RegistrTagRoutes(router *http.ServeMux, handler *handler.Handler) {
 		middleware.AuthMiddleware(http.HandlerFunc(handler.DeleteTag)))
 
 }
+
+func RegistrCommentRoutes(router *http.ServeMux, handler *handler.Handler) {
+
+	// Middleware yo'q --------------------
+	router.HandleFunc("GET /comments", handler.GetCommentsByArticleID)
+
+	// Middleware bor ----------------------
+
+	router.Handle("POST /comments/create",
+		middleware.AuthMiddleware(http.HandlerFunc(handler.CreateComment)))
+
+	router.Handle("DELETE /comment/delete",
+		middleware.AuthMiddleware(http.HandlerFunc(handler.DeleteComment)))
+}
