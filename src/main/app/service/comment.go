@@ -21,4 +21,29 @@ func NewCommentService(commentRepo repository.CommentRepoI) CommentServiceI {
 
 func (cs *CommentService) CreateComment(comment *models.Comments) error {
 
+	err := cs.commentrepo.CreateComment(comment)
+	if err != nil {
+		return err
+	}
+	return nil
+
+}
+
+func (cs *CommentService) GetByArticleID(articleId int64) ([]*models.Comments, error) {
+	comments, err := cs.commentrepo.GetByArtilceId(articleId)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return comments, nil
+}
+
+func (cs *CommentService) Delete(id int64) error {
+	err := cs.commentrepo.Delete(id)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
