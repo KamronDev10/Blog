@@ -35,6 +35,21 @@ Swagger: `http://localhost:8080/swagger/index.html`
 - `PUT /articles/update` — Update article 🔒
 - `DELETE /articles/delete` — Delete article 🔒
 
+
+### Comments
+- `GET /comments` — Get comments by article
+- `POST /comments/create` — Create comment 🔒
+- `DELETE /comments/delete` — Delete comment 🔒
+
+
+
+### Tags
+- `GET /tags` — Get all tags
+- `GET /tags/get` — Get single tag
+- `POST /tags/create` — Create tag 🔒
+- `DELETE /tags/delete` — Delete tag 🔒
+
+
 > 🔒 — Requires token
 
 yana qoshish mumkin boladi 

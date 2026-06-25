@@ -30,7 +30,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		}
 
 		// 5. Context ga sol — handler ishlatadi
-		ctx := context.WithValue(r.Context(), "userID", claims.ID)
+		ctx := context.WithValue(r.Context(), "userID", claims.Id)
 
 		// 6. Hammasi to'g'ri → handler ga o't
 		next.ServeHTTP(w, r.WithContext(ctx))
