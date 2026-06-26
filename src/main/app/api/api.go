@@ -37,7 +37,6 @@ func RegistrTagRoutes(router *http.ServeMux, handler *handler.Handler) {
 	router.HandleFunc("GET /tags/get", handler.GetTagByID)
 
 	// Middleware bor --------------------------
-
 	router.Handle("POST /tags/create",
 		middleware.AuthMiddleware(http.HandlerFunc(handler.CreateTag)))
 
@@ -52,10 +51,23 @@ func RegistrCommentRoutes(router *http.ServeMux, handler *handler.Handler) {
 	router.HandleFunc("GET /comments", handler.GetCommentsByArticleID)
 
 	// Middleware bor ----------------------
-
 	router.Handle("POST /comments/create",
 		middleware.AuthMiddleware(http.HandlerFunc(handler.CreateComment)))
 
 	router.Handle("DELETE /comments/delete",
 		middleware.AuthMiddleware(http.HandlerFunc(handler.DeleteComment)))
+}
+
+func RegistrFollowsRoutes(router *http.ServeMux, handler *handler.Handler) {
+
+	// Middleware yo'q ----------------------------
+	router.HandleFunc("GET /follows/followers", handler.GetFollowers)
+	router.HandleFunc("GET /follows/following", handler.GetFollowing)
+
+	// Middleware bor -------------------------------------
+	router.Handle("POST /follows/follow",
+		middleware.AuthMiddleware(http.HandlerFunc(handler.Follow)))
+
+	router.Handle("DELETE /follows/unfollow",
+		middleware.AuthMiddleware(http.HandlerFunc(handler.Unfollow)))
 }

@@ -7,4 +7,5 @@ type Handler struct {
 	ServiceUser    service.UserServiceI
 	ServiceTag     service.TagServiceI
 	ServiceComment service.CommentServiceI
+	ServiceFollow  service.FollowsServiceI
 }
