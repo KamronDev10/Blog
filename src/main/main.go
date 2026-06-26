@@ -76,6 +76,17 @@ func main() {
 		api.RegistrCommentRoutes(router, &commentHandler)
 	}
 
+	// ---------------- Follows leyer -----------------------
+	{
+		followsRepo := repository.NewFollowerRepo(db)
+		followsService := service.NewFollowsRepo(followsRepo)
+
+		followsHandler := handler.Handler{
+			ServiceFollow: followsService,
+		}
+		api.RegistrFollowsRoutes(router, &followsHandler)
+	}
+
 	// -- Server --------- layer
 	router.HandleFunc("/swagger/", httpSwagger.WrapHandler)
 	http.ListenAndServe(":8080", router)

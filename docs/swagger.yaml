@@ -78,6 +78,13 @@ definitions:
       user_id:
         type: integer
     type: object
+  models.Follows:
+    properties:
+      follower_id:
+        type: integer
+      following_id:
+        type: integer
+    type: object
   models.Tag:
     properties:
       id:
@@ -358,6 +365,94 @@ paths:
       summary: Comment o'chirish
       tags:
       - Comments
+  /follows/follow:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Following ID
+        in: query
+        name: following_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: follow qilindi
+          schema:
+            type: string
+        "400":
+          description: id noto'g'ri
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Follow qilish
+      tags:
+      - follows
+  /follows/followers:
+    get:
+      parameters:
+      - description: User ID
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Follows'
+            type: array
+      summary: Obunachlarni ko'rish
+      tags:
+      - follows
+  /follows/following:
+    get:
+      parameters:
+      - description: User ID
+        in: query
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Follows'
+            type: array
+      summary: Following larni ko'rish
+      tags:
+      - follows
+  /follows/unfollow:
+    delete:
+      parameters:
+      - description: Following ID
+        in: query
+        name: following_id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: unfollow qilindi
+          schema:
+            type: string
+        "400":
+          description: id noto'g'ri
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Unfollow qilish
+      tags:
+      - follows
   /tags:
     get:
       produces:

@@ -3,6 +3,7 @@ package service
 import (
 	"blog_app/src/main/app/models"
 	"blog_app/src/main/app/repository"
+	"errors"
 )
 
 type FollowsServiceI interface {
@@ -21,6 +22,9 @@ func NewFollowsRepo(followrepo repository.FollowsRepoI) FollowsServiceI {
 }
 
 func (fs *FollowsService) Follow(follow models.Follows) error {
+	if follow.FollowerId == follow.FollowingId {
+		return errors.New("o'zingizni follow qila olmaysiz")
+	}
 	err := fs.followRepo.Follow(follow)
 	if err != nil {
 		return err

@@ -68,7 +68,7 @@ func (fr *FollowRepo) GetFollowers(userId int64) ([]*models.Follows, error) {
 }
 
 func (fr *FollowRepo) GetFollowing(userId int64) ([]*models.Follows, error) {
-	query := `SELECT follower_id , following_id WHERE follower_id = $1`
+	query := `SELECT follower_id, following_id FROM follows WHERE follower_id = $1`
 
 	rows, err := fr.db.Query(query, userId)
 	if err != nil {

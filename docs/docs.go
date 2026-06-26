@@ -436,6 +436,146 @@ const docTemplate = `{
                 }
             }
         },
+        "/follows/follow": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "follows"
+                ],
+                "summary": "Follow qilish",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Following ID",
+                        "name": "following_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "follow qilindi",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "id noto'g'ri",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/follows/followers": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "follows"
+                ],
+                "summary": "Obunachlarni ko'rish",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Follows"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/follows/following": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "follows"
+                ],
+                "summary": "Following larni ko'rish",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Follows"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/follows/unfollow": {
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "follows"
+                ],
+                "summary": "Unfollow qilish",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Following ID",
+                        "name": "following_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "unfollow qilindi",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "id noto'g'ri",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/tags": {
             "get": {
                 "produces": [
@@ -685,6 +825,17 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Follows": {
+            "type": "object",
+            "properties": {
+                "follower_id": {
+                    "type": "integer"
+                },
+                "following_id": {
                     "type": "integer"
                 }
             }
