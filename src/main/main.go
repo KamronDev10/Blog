@@ -87,6 +87,17 @@ func main() {
 		api.RegistrFollowsRoutes(router, &followsHandler)
 	}
 
+	// Article-Tags Layer ------------------------------------------
+	{
+		articletagrepo := repository.NewArtilceTagRepo(db)
+		articletagService := service.NewArticleTagService(articletagrepo)
+
+		articletagHandler := handler.Handler{
+			ServiceArticleTag: articletagService,
+		}
+		api.RegistrArtilceTagRoutes(router, articletagHandler)
+	}
+
 	// -- Server --------- layer
 	router.HandleFunc("/swagger/", httpSwagger.WrapHandler)
 	http.ListenAndServe(":8080", router)

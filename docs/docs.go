@@ -15,6 +15,112 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/article-tags": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ArticleTags"
+                ],
+                "summary": "Article taglarini ko'rish",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Article ID",
+                        "name": "article_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ArtilceTag"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/article-tags/add": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ArticleTags"
+                ],
+                "summary": "Articlega tag qo'shish",
+                "parameters": [
+                    {
+                        "description": "Article va Tag ID",
+                        "name": "article_tag",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateArticleTagRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Tag qo'shildi",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/article-tags/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "ArticleTags"
+                ],
+                "summary": "Articledan tag o'chirish",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Article ID",
+                        "name": "article_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Tag ID",
+                        "name": "tag_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tag o'chirildi",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/articles": {
             "get": {
                 "description": "Ma'lumotlar bazasidan barcha maqolalar ro'yxatini qaytaradi",
@@ -719,6 +825,17 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.CreateArticleTagRequest": {
+            "type": "object",
+            "properties": {
+                "article_id": {
+                    "type": "integer"
+                },
+                "tag_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "dto.CreateCommentRequest": {
             "type": "object",
             "properties": {
@@ -806,6 +923,17 @@ const docTemplate = `{
                 "viewCount": {
                     "type": "integer",
                     "format": "int64"
+                }
+            }
+        },
+        "models.ArtilceTag": {
+            "type": "object",
+            "properties": {
+                "article_id": {
+                    "type": "integer"
+                },
+                "tag_id": {
+                    "type": "integer"
                 }
             }
         },

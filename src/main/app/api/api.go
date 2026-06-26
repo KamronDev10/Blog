@@ -71,3 +71,16 @@ func RegistrFollowsRoutes(router *http.ServeMux, handler *handler.Handler) {
 	router.Handle("DELETE /follows/unfollow",
 		middleware.AuthMiddleware(http.HandlerFunc(handler.Unfollow)))
 }
+
+func RegistrArtilceTagRoutes(router *http.ServeMux, handler handler.Handler) {
+
+	// middleware yo'q ---------------
+	router.HandleFunc("GET /article-tags", handler.GetTagsByArticleID)
+
+	// middleWare bor --------------------------------------
+	router.Handle("POST /article-tags/add",
+		middleware.AuthMiddleware(http.HandlerFunc(handler.AddTag)))
+
+	router.Handle("DELETE /article-tags/delete",
+		middleware.AuthMiddleware(http.HandlerFunc(handler.DeleteArticleTag)))
+}

@@ -6,6 +6,13 @@ definitions:
       title:
         type: string
     type: object
+  dto.CreateArticleTagRequest:
+    properties:
+      article_id:
+        type: integer
+      tag_id:
+        type: integer
+    type: object
   dto.CreateCommentRequest:
     properties:
       article_id:
@@ -65,6 +72,13 @@ definitions:
         format: int64
         type: integer
     type: object
+  models.ArtilceTag:
+    properties:
+      article_id:
+        type: integer
+      tag_id:
+        type: integer
+    type: object
   models.Comments:
     properties:
       article_id:
@@ -97,6 +111,72 @@ definitions:
 info:
   contact: {}
 paths:
+  /article-tags:
+    get:
+      parameters:
+      - description: Article ID
+        in: query
+        name: article_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ArtilceTag'
+            type: array
+      summary: Article taglarini ko'rish
+      tags:
+      - ArticleTags
+  /article-tags/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Article va Tag ID
+        in: body
+        name: article_tag
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateArticleTagRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Tag qo'shildi
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Articlega tag qo'shish
+      tags:
+      - ArticleTags
+  /article-tags/delete:
+    delete:
+      parameters:
+      - description: Article ID
+        in: query
+        name: article_id
+        required: true
+        type: integer
+      - description: Tag ID
+        in: query
+        name: tag_id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Tag o'chirildi
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Articledan tag o'chirish
+      tags:
+      - ArticleTags
   /articles:
     get:
       description: Ma'lumotlar bazasidan barcha maqolalar ro'yxatini qaytaradi
