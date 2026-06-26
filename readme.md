@@ -50,8 +50,19 @@ Swagger: `http://localhost:8080/swagger/index.html`
 - `DELETE /tags/delete` — Delete tag 🔒
 
 
+### Follows
+- `GET /follows/followers` — Get followers
+- `GET /follows/following` — Get following
+- `POST /follows/follow` — Follow user 🔒
+- `DELETE /follows/unfollow` — Unfollow user 🔒
+
+
+
+### Article Tags
+- `GET /article-tags` — Get tags by article
+- `POST /article-tags/add` — Add tag to article 🔒
+- `DELETE /article-tags/delete` — Remove tag from article 🔒
+
+
+
 > 🔒 — Requires token
-
-yana qoshish mumkin boladi 
-
-api qosh 

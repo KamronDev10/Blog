@@ -20,7 +20,7 @@ func NewArtilceTagRepo(db *sql.DB) ArtilceTagRepoI {
 }
 
 func (atr *ArtilceTagRepo) AddTag(artilceTag models.ArtilceTag) error {
-	query := `INSERT INTO article_tags (article_id , tag_id) VALULES ($1 , $2)`
+	query := `INSERT INTO article_tags (article_id , tag_id) VALUES ($1 , $2)`
 
 	_, err := atr.db.Exec(query, artilceTag.ArtilceId, artilceTag.TagId)
 
