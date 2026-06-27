@@ -102,7 +102,7 @@ func main() {
 	router.HandleFunc("/swagger/", httpSwagger.WrapHandler)
 
 	// Static frontend files
-	fs := http.FileServer(http.Dir("/home/kama/blog-frontend/dist"))
+	fs := http.FileServer(http.Dir("./dist"))
 	router.Handle("/", fs)
 	router.Handle("/assets/", fs)
 	http.ListenAndServe(":8080", corsMiddleware(router))
