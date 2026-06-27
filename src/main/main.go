@@ -100,6 +100,25 @@ func main() {
 
 	// -- Server --------- layer
 	router.HandleFunc("/swagger/", httpSwagger.WrapHandler)
-	http.ListenAndServe(":8080", router)
 
+	// Static frontend files
+	fs := http.FileServer(http.Dir("/home/kama/blog-frontend/dist"))
+	router.Handle("/", fs)
+	router.Handle("/assets/", fs)
+	http.ListenAndServe(":8080", corsMiddleware(router))
+
+}
+
+func corsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
 }
