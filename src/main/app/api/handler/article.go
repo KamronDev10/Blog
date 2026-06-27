@@ -3,14 +3,11 @@ package handler
 import (
 	"blog_app/src/main/app/dto"
 	"blog_app/src/main/app/models"
-	"blog_app/src/main/common/token"
 	"encoding/json"
 	"fmt"
-
 	"log"
 	"net/http"
 	"strconv"
-	"strings"
 )
 
 // Create godoc
@@ -128,36 +125,9 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "id noto'g'ri", http.StatusBadRequest)
 		return
 	}
-
-	// Token dan userID olish
-	authHeader := r.Header.Get("Authorization")
-	if authHeader == "" {
-		http.Error(w, "Token yo'q", http.StatusUnauthorized)
-		return
-	}
-	tokenStr := strings.TrimPrefix(authHeader, "Bearer ")
-	claims, err := token.AuthToken(tokenStr)
-	if err != nil {
-		http.Error(w, "Token yaroqsiz", http.StatusUnauthorized)
-		return
-	}
-
-	// Maqolani olish
-	article, err := h.Service.Get(id)
-	if err != nil {
-		http.Error(w, "Maqola topilmadi", http.StatusNotFound)
-		return
-	}
-
-	// Egasi tekshirish
-	if article.UserID != claims.Id {
-		http.Error(w, "Ruxsat yo'q", http.StatusForbidden)
-		return
-	}
-
 	err = h.Service.Delete(id)
 	if err != nil {
-		http.Error(w, "O'chirishda xato", http.StatusInternalServerError)
+		http.Error(w, "O'chirishda xat", http.StatusInternalServerError)
 		return
 	}
 	w.WriteHeader(http.StatusOK)
