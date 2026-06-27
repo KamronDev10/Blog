@@ -12,7 +12,7 @@ import (
 func DbConnection() (*sql.DB, error) {
 	err := godotenv.Load("src/resources/.dev.env")
 	if err != nil {
-		log.Fatal("Error loading .dev.env file")
+		godotenv.Load("src/resources/.dev.env")
 	}
 
 	dbURL := os.Getenv("DB_URL")
